@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register - SIRASO</title>
+  <link rel="stylesheet" href="stylesheets/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <div class="left">
+      <h1>Welcome!</h1>
+      <h2>SIRASO</h2>
+      <p>Sistem Informasi Pemesanan Makanan<br>di Bussiness UNAND</p>
+    </div>
+    <div class="right">
+      <form class="login-box" action="/register" method="POST">
+        <h2>Sign Up</h2>
+        <div class="input-box">
+          <span class="icon">👤</span>
+          <input type="text" name="username" placeholder="username" required>
+        </div>
+        <div class="input-box">
+          <span class="icon">📧</span>
+          <input type="email" name="email" placeholder="email" required>
+        </div>
+        <div class="input-box">
+          <span class="icon">🔒</span>
+          <input type="password" name="password" placeholder="password" required>
+        </div>
+        <button type="submit" class="btn">Create Account</button>
+        <p class="signup">Already have an account? <a href="/" class="link">Log in</a></p>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

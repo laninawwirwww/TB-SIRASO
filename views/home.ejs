@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Home - SIRASO</title>
+  <link rel="stylesheet" href="/stylesheets/style-home.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">Pemesanan Makanan di Bussiness Center UNAND</div>
+    <nav class="nav-links">
+      <a href="#">Home</a>
+      <a href="#">About</a>
+      <a href="#">Pesanan saya</a>
+      <div class="user-icon">👤</div>
+    </nav>
+  </header>
+
+  <section class="slider">
+    <div class="arrow">⬅</div>
+    <div class="ad">Advertisement</div>
+    <div class="arrow">➡</div>
+  </section>
+
+  <main class="main-content">
+    <aside class="sidebar">
+      <h3>Nama warung</h3>
+      <ul>
+        <li>Warung A</li>
+        <li>Warung B</li>
+        <li>Warung C</li>
+        <li>Warung D</li>
+      </ul>
+    </aside>
+
+    <section class="menu">
+      <h3>Menu Favorit</h3>
+      <div class="menu-grid">
+        <% const menu = [
+          { name: "Chicken Katsu", price: 15000, img: "katsu.jpg" },
+          { name: "Nasi Goreng", price: 12000, img: "nasigoreng.jpg" },
+          { name: "Bakso", price: 15000, img: "bakso.jpg" },
+          { name: "Batagor", price: 8000, img: "batagor.jpg" }
+        ]; %>
+
+        <% menu.forEach(item => { %>
+          <div class="menu-item">
+            <img src="/images/<%= item.img %>" alt="<%= item.name %>">
+            <p><%= item.name %><br>Rp. <%= item.price.toLocaleString() %></p>
+            <div class="buttons">
+              <button class="btn-detail">Detail</button>
+              <button class="btn-order">Pesan</button>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer"></footer>
+</body>
+</html>

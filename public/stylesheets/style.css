@@ -1,0 +1,115 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Playfair Display', serif;
+}
+
+body, html {
+  height: 100%;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+}
+
+.left {
+  flex: 1;
+  background-color: #005b0b;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 50px;
+}
+
+.left h1 {
+  font-size: 60px;
+  margin-bottom: 10px;
+}
+
+.left h2 {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.left p {
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+.right {
+  flex: 1;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-box {
+  background-color: #f2f2f2;
+  padding: 40px;
+  border-radius: 25px;
+  width: 80%;
+  max-width: 400px;
+}
+
+.login-box h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #111;
+}
+
+.input-box {
+  display: flex;
+  align-items: center;
+  background: white;
+  border: 1px solid black;
+  border-radius: 20px;
+  margin: 15px 0;
+  padding: 10px;
+}
+
+.input-box input {
+  border: none;
+  outline: none;
+  width: 100%;
+  padding-left: 10px;
+  background: transparent;
+}
+
+.icon {
+  font-size: 18px;
+}
+
+.options {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin: 10px 0;
+}
+
+.btn {
+  width: 100%;
+  background-color: #005b0b;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.signup {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.signup .link {
+  color: red;
+  text-decoration: none;
+}
