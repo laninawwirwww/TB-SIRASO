@@ -1,62 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Home - SIRASO</title>
-  <link rel="stylesheet" href="/stylesheets/style-home.css">
+  <meta charset="UTF-8" />
+  <title>Home - SIPEMBE</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet" />
 </head>
-<body>
-  <header class="navbar">
-    <div class="logo">Pemesanan Makanan di Bussiness Center UNAND</div>
-    <nav class="nav-links">
-      <a href="#">Home</a>
-      <a href="#">About</a>
-      <a href="#">Pesanan saya</a>
-      <div class="user-icon">👤</div>
-    </nav>
-  </header>
+<body class="bg-white font-sans text-gray-900">
 
-  <section class="slider">
-    <div class="arrow">⬅</div>
-    <div class="ad">Advertisement</div>
-    <div class="arrow">➡</div>
-  </section>
+  <main>
+    <!-- Navbar -->
+    <div class="bg-green-600 p-4 flex justify-between items-center text-white">
+      <div class="text-xl font-bold">Pemesanan Makanan di Bussiness Center UNAND</div>
+      <div class="flex items-center space-x-4">
+        <a href="#" class="hover:text-gray-200">Home</a>
+        <a href="#" class="hover:text-gray-200">About</a>
+        <a href="#" class="hover:text-gray-200">Pesanan saya</a>
+        <div class="text-2xl">&#128100;</div>
+      </div>
+    </div>
 
-  <main class="main-content">
-    <aside class="sidebar">
-      <h3>Nama warung</h3>
-      <ul>
-        <li>Warung A</li>
-        <li>Warung B</li>
-        <li>Warung C</li>
-        <li>Warung D</li>
-      </ul>
-    </aside>
+    <!-- Advertisement -->
+    <div class="flex justify-between items-center bg-gray-200 p-4 mt-4">
+      <div class="cursor-pointer text-xl">&#x2190;</div>
+      <div class="flex-1 text-center font-semibold">Advertisement</div>
+      <div class="cursor-pointer text-xl">&#x2192;</div>
+    </div>
 
-    <section class="menu">
-      <h3>Menu Favorit</h3>
-      <div class="menu-grid">
-        <% const menu = [
-          { name: "Chicken Katsu", price: 15000, img: "katsu.jpg" },
-          { name: "Nasi Goreng", price: 12000, img: "nasigoreng.jpg" },
-          { name: "Bakso", price: 15000, img: "bakso.jpg" },
-          { name: "Batagor", price: 8000, img: "batagor.jpg" }
-        ]; %>
+    <!-- Main Section -->
+    <div class="flex mt-8">
+      <!-- Sidebar -->
+      <div class="w-1/4 p-4 bg-gray-100 shadow-lg">
+        <h3 class="font-semibold text-xl mb-4">Nama warung</h3>
+        <ul class="space-y-2">
+          <li>Warung 1</li>
+          <li>Warung 2</li>
+          <li>Warung 3</li>
+          <li>Warung 4</li>
+          <li>Warung 5</li>
+          <li>Warung 6</li>
+        </ul>
+      </div>
 
-        <% menu.forEach(item => { %>
-          <div class="menu-item">
-            <img src="/images/<%= item.img %>" alt="<%= item.name %>">
-            <p><%= item.name %><br>Rp. <%= item.price.toLocaleString() %></p>
-            <div class="buttons">
-              <button class="btn-detail">Detail</button>
-              <button class="btn-order">Pesan</button>
+      <!-- Menu Section -->
+      <div class="w-3/4 p-4">
+        <h3 class="text-2xl font-semibold mb-6">Menu Favorit</h3>
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          <!-- Menu Item -->
+          <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <img src="/images/katsu.jpg" alt="Chicken Katsu" class="w-full h-40 object-cover">
+            <div class="p-4">
+              <p class="font-semibold text-lg">Chicken Katsu</p>
+              <p class="text-gray-500">Rp. 15.000</p>
+              <div class="flex space-x-2 mt-2">
+                <button class="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400">Detail</button>
+                <button class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">Pesan</button>
+              </div>
             </div>
           </div>
-        <% }); %>
+
+          <!-- Menu Item -->
+          <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <img src="/images/nasgor.jpeg" alt="Nasi Goreng" class="w-full h-40 object-cover">
+            <div class="p-4">
+              <p class="font-semibold text-lg">Nasi Goreng</p>
+              <p class="text-gray-500">Rp. 12.000</p>
+              <div class="flex space-x-2 mt-2">
+                <button class="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400">Detail</button>
+                <button class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">Pesan</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Menu Item -->
+          <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <img src="/images/bakso.jpeg" alt="Bakso" class="w-full h-40 object-cover">
+            <div class="p-4">
+              <p class="font-semibold text-lg">Bakso</p>
+              <p class="text-gray-500">Rp. 15.000</p>
+              <div class="flex space-x-2 mt-2">
+                <button class="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400">Detail</button>
+                <button class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">Pesan</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Menu Item -->
+          <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <img src="/images/batagor.jpg" alt="Batagor" class="w-full h-40 object-cover">
+            <div class="p-4">
+              <p class="font-semibold text-lg">Batagor</p>
+              <p class="text-gray-500">Rp. 8.000</p>
+              <div class="flex space-x-2 mt-2">
+                <button class="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400">Detail</button>
+                <button class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">Pesan</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </section>
+    </div>
+
   </main>
 
-  <footer class="footer"></footer>
+  <!-- Footer -->
+  <footer class="bg-green-600 text-white p-4 mt-8 text-center">
+    <p>© 2025 SIRASO BC</p>
+  </footer>
+
 </body>
 </html>
