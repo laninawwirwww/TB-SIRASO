@@ -1,6 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
+// Rute GET untuk halaman login
+router.get('/login', (req, res) => {
+  res.render('index', { error: null }); // Render halaman login
+});
+
 // Rute POST untuk login
 router.post('/login', (req, res) => {
   const { username, password } = req.body;
@@ -25,17 +30,7 @@ router.post('/register', (req, res) => {
   
   // Proses registrasi (misalnya simpan ke database)
   
-  res.redirect('/users/login'); // Setelah registrasi, arahkan ke halaman login
-});
-
-// Rute untuk logout
-router.get('/logout', (req, res) => {
-  req.session.destroy((err) => {
-    if (err) {
-      return res.redirect('/home');
-    }
-    res.redirect('/login'); // Setelah logout, redirect ke halaman login
-  });
+  res.redirect('/login'); // Setelah registrasi, arahkan ke halaman login
 });
 
 module.exports = router;

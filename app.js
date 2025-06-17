@@ -26,7 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Middleware session
 app.use(session({
-  secret: 'your_secret_key',  // Ganti dengan kunci yang lebih aman
+  secret: 'ihsan',  // Ganti dengan kunci yang lebih aman
   resave: false,
   saveUninitialized: true
 }));
