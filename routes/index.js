@@ -29,6 +29,12 @@ router.get('/', (req, res) => {
   res.redirect('/users/login'); // Arahkan root ke halaman login
 });
 
+// Halaman pencarian
+router.get('/pencarian', function(req, res, next) {
+  res.render('pencarian');
+});
+
+
 // post setelah register
 router.post('/register', (req, res) => {
   const { username, password } = req.body;
