@@ -6,12 +6,22 @@ router.get('/login', (req, res) => {
   res.render('index', { error: null }); // Pastikan halaman login render dengan benar
 });
 
-// Halaman utama setelah login
+// Get untuk halaman home
 router.get('/home', (req, res) => {
+  // Cek apakah user sudah login
   if (!req.session.user) {
-    return res.redirect('/users/login'); // Jika belum login, redirect ke login
+    return res.redirect('/users/login'); // Jika belum login, redirect ke halaman login
   }
-  res.render('home', { username: req.session.user.username });
+  
+  // Render halaman home jika user sudah login
+  res.render('/users/home', { user: req.session.user });
+});
+
+// Post untuk halaman home
+router.post('/home', (req, res) => {
+  // Proses yang ingin dilakukan setelah login
+  // Misalnya, simpan data atau tampilkan pesan sukses
+  res.redirect('/users/home'); // Redirect ke halaman home
 });
 
 // Arahkan root ke halaman login
