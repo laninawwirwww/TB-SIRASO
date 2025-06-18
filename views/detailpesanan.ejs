@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pembayaran Berhasil</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+</head>
+<body class="bg-gray-100 font-sans">
+
+  <nav class="bg-green-500 p-4 text-white">
+    <div class="container mx-auto flex justify-between">
+      <div class="font-semibold">Pemesanan Makanan di Bussiness Center UNAND</div>
+      <div class="space-x-6">
+        <a href="/" class="hover:underline">Home</a>
+        <a href="/about" class="hover:underline">About</a>
+        <a href="/pesanan" class="hover:underline">Pesanan saya</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="mt-20 flex justify-center">
+    <div class="bg-white rounded-md shadow-lg p-8 max-w-3xl w-full">
+      <h1 class="text-center text-2xl font-semibold mb-10 text-gray-800">Pembayaran Berhasil</h1>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Ringkasan Pesanan -->
+        <section>
+          <h2 class="font-semibold mb-4 text-gray-700">Ringkasan Pesanan</h2>
+          <ul class="list-disc list-inside space-y-2 text-gray-800">
+            <% pesanan.forEach(item => { %>
+              <li><%= item.quantity %>x <%= item.name %> - Rp<%= item.price.toLocaleString('id-ID') %></li>
+            <% }) %>
+            <li>Biaya Layanan - Rp2.000</li>
+            <li>Metode Pembayaran - <%= metodePembayaran %></li>
+          </ul>
+          <p class="font-semibold mt-4">Total Pembayaran: Rp<%= (totalPesanan + 2000).toLocaleString('id-ID') %></p>
+        </section>
+
+        <!-- Detail Transaksi -->
+        <section>
+          <h2 class="font-semibold mb-4 text-gray-700">Detail Transaksi</h2>
+          <table class="w-full text-gray-700">
+            <tbody>
+              <tr>
+                <th class="text-left font-semibold pr-4">No. Transaksi:</th>
+                <td><%= noTransaksi %></td>
+              </tr>
+              <tr>
+                <th class="text-left font-semibold pr-4">Tanggal:</th>
+                <td><%= tanggalTransaksi %></td>
+              </tr>
+              <tr>
+                <th class="text-left font-semibold pr-4">Metode Pembayaran:</th>
+                <td><%= metodePembayaran %></td>
+              </tr>
+              <tr>
+                <th class="text-left font-semibold pr-4">Status:</th>
+                <td class="text-green-600 font-semibold">Pembayaran berhasil</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </div>
+
+      <div class="mt-10 flex justify-between">
+        <a href="/konfirmasi" class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-md">Batal</a>
+        <button id="downloadPdfBtn" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-md">Download PDF</button>
+      </div>
+    </div>
+  </main>
+
+</body>
+</html>
