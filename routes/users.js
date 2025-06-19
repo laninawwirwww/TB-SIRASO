@@ -1,39 +1,64 @@
 const express = require('express');
 const router = express.Router();
+const { registerUser } = require('../controller/registerController'); // Mengimpor controller untuk registrasi
+const bcrypt = require('bcrypt');
+
+// Impor Prisma Client dan inisialisasi
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient(); // Inisialisasi PrismaClient
+
 
 // Rute GET untuk halaman login
 router.get('/login', (req, res) => {
-  res.render('index', { error: null }); // Render halaman login
+  res.render('login', { error: null }); // Render halaman login
 });
 
 // Rute POST untuk login
 router.post('/login', (req, res) => {
   const { username, password } = req.body;
-  
-  // Misalnya, periksa username dan password (contoh sederhana)
-  if (username === 'admin' && password === 'password') {
-    req.session.user = { username }; // Simpan user di session
-    return res.redirect('/home'); // Setelah login, arahkan ke halaman home
-  }
-  
-  res.render('index', { error: 'Username atau password salah' }); // Tampilkan error jika login gagal
+
+  // Mencari user berdasarkan username
+  prisma.user.findUnique({
+    where: { username: username }
+  })
+  .then(user => {
+    if (!user) {
+      return res.render('login', { error: 'Username tidak ditemukan' });
+    }
+
+    // Membandingkan password yang dimasukkan dengan password yang terenkripsi
+    bcrypt.compare(password, user.password)
+      .then(isMatch => {
+        if (isMatch) {
+          // Menyimpan data user ke session
+          req.session.user = user;
+
+          // Arahkan ke halaman home setelah login sukses
+          res.redirect('/users/home');
+        } else {
+          return res.render('login', { error: 'Password salah' });
+        }
+      })
+      .catch(err => {
+        console.error('Error during password comparison:', err);
+        res.status(500).send('Internal Server Error');
+      });
+  })
+  .catch(error => {
+    console.error('Error during login:', error);
+    res.status(500).send('Internal Server Error');
+  });
 });
 
 // Rute GET untuk halaman Register
 router.get('/register', (req, res) => {
-  res.render('register'); // Menampilkan halaman registrasi
+  res.render('register', { error: null }); // Menampilkan halaman registrasi
 });
 
 // Rute POST untuk registrasi
-router.post('/register', (req, res) => {
-  const { username, password } = req.body;
-  
-  // Proses registrasi (misalnya simpan ke database)
-  
-  res.redirect('/login'); // Setelah registrasi, arahkan ke halaman login
-});
+router.post('/register', registerUser); // Memanggil controller register untuk proses registrasi
 
-// Get untuk halaman home
+// Rute GET untuk halaman home
 router.get('/home', (req, res) => {
   // Cek apakah user sudah login
   if (!req.session.user) {
@@ -44,7 +69,7 @@ router.get('/home', (req, res) => {
   res.render('home', { user: req.session.user });
 });
 
-// Post untuk halaman home
+// Rute POST untuk halaman home (bisa digunakan jika diperlukan untuk handling form setelah login)
 router.post('/home', (req, res) => {
   // Proses yang ingin dilakukan setelah login
   // Misalnya, simpan data atau tampilkan pesan sukses

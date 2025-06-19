@@ -1,40 +1,49 @@
-const prisma = require('../generated/prisma-client');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+const prisma = require('@prisma/client');
+const bcrypt = require('bcrypt');
+const { validationResult } = require('express-validator');
+const prisma = new PrismaClient();
 
-// Login user and generate a JWT token
+// Fungsi untuk login
 const loginUser = async (req, res) => {
-    const { email, password } = req.body;
+  // Validasi form input
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.render('login', { error: errors.array()[0].msg }); // Menampilkan error jika validasi gagal
+  }
 
-    try {
-        // Find the user by email
-        const user = await prisma.user({ email });
+  const { username, password } = req.body;
 
-        // If user not found, return error
-        if (!user) {
-            return res.status(400).json({ error: 'User not found' });
-        }
+  try {
+    // Mencari user berdasarkan username
+    const user = await prisma.user.findUnique({
+      where: {
+        username: username,
+        password: password, // Pastikan ini sesuai dengan struktur database Anda
+      },
+    });
 
-        // Compare the entered password with the hashed password
-        const isPasswordValid = await bcrypt.compare(password, user.password);
-
-        // If password is invalid, return error
-        if (!isPasswordValid) {
-            return res.status(400).json({ error: 'Invalid password' });
-        }
-
-        // Generate JWT token
-        const token = jwt.sign({ userId: user.id }, 'your_secret_key', { expiresIn: '1h' });
-
-        // Set token in cookie or session, or send it in the response
-        res.cookie('token', token, { httpOnly: true });
-
-        // Redirect to home page after successful login
-        res.redirect('/home');
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Login failed. Please try again.' });
+    // Jika user tidak ditemukan
+    if (!user) {
+      return res.render('login', { error: 'Username atau password salah' });
     }
+
+    // Membandingkan password yang diinput dengan yang ada di database
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    // Jika password tidak valid
+    if (!isPasswordValid) {
+      return res.render('login', { error: 'Username atau password salah' });
+    }
+
+    // Jika login berhasil, simpan user ke session
+    req.session.user = user;
+
+    // Arahkan ke halaman home setelah login sukses
+    res.redirect('/home');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Terjadi kesalahan pada server.');
+  }
 };
 
 module.exports = { loginUser };

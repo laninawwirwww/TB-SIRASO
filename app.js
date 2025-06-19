@@ -3,17 +3,31 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const session = require('express-session');
+const {PrismaClient} = require('@prisma/client'); // Mengimpor Prisma Client
 
-
+  
+const app = express();
+const port = 3000; // Port yang akan digunakan oleh server
 
 // Mengimpor routing
 const indexRouter = require('./routes/index'); 
 const usersRouter = require('./routes/users'); 
+require('dotenv').config(); // Menggunakan dotenv untuk mengelola variabel lingkungan
 
-const app = express();
 
-// Port yang akan digunakan oleh server
-const port = 3000;
+app.post("/addUsers", async (req, res) => {
+  const user = req.body; // Mengambil data user dari request body
+  const result = await prisma.user.create({
+    data: user // Menyimpan data user ke database
+  })
+  res.send(result)
+});  
+
+app.use(session({
+  secret: process.env.SESSION_SECRET, // Mengambil secret dari .env
+  resave: false,
+  saveUninitialized: true,
+}));
 
 // View engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -33,34 +47,11 @@ app.use(session({
   saveUninitialized: true
 }));
 
+
 // Routing untuk halaman utama dan login
 app.use('/', indexRouter);  // Menggunakan rute untuk halaman utama
 app.use('/users', usersRouter); // Menggunakan rute untuk login dan registrasi
 
-// Register route
-app.post('/register', async (req, res) => {
-  const { username, email, password } = req.body;
-  
-  try {
-    // Hash password sebelum menyimpan
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Menyimpan pengguna baru ke database menggunakan Prisma
-    const newUser = await prisma.createUser({
-      data: {
-        username,
-        email,
-        password: hashedPassword,
-      },
-    });
-
-    // Setelah register berhasil, alihkan ke halaman login
-    res.redirect('/users/login');
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Gagal registrasi, coba lagi.' });
-  }
-});
 
 // Login route
 app.post('/login', async (req, res) => {
@@ -113,6 +104,7 @@ app.get('/users/login', (req, res) => {
 app.get('/users/register', (req, res) => {
   res.render('register');
 });
+
 
 // Error handling
 app.use(function(req, res, next) {
