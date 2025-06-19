@@ -1,9 +1,49 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcrypt');
+const prisma = require('@prisma/client');
+const { PrismaClient } = prisma;
 
 // Halaman login
 router.get('/login', (req, res) => {
-  res.render('index', { error: null }); // Pastikan halaman login render dengan benar
+  res.render('login', { error: null }); // Pastikan halaman login render dengan benar
+});
+
+// Proses login
+router.post('/login', (req, res) => {
+  const { username, password } = req.body;
+
+  // Mencari user berdasarkan username
+  prisma.user.findUnique({
+    where: { username: username }
+  })
+  .then(user => {
+    if (!user) {
+      return res.render('login', { error: 'Username tidak ditemukan' });
+    }
+
+    // Membandingkan password yang dimasukkan dengan password yang terenkripsi
+    bcrypt.compare(password, user.password)
+      .then(isMatch => {
+        if (isMatch) {
+          // Menyimpan data user ke session
+          req.session.user = user;
+
+          // Arahkan ke halaman home setelah login sukses
+          res.redirect('/users/home');
+        } else {
+          return res.render('login', { error: 'Password salah' });
+        }
+      })
+      .catch(err => {
+        console.error('Error during password comparison:', err);
+        res.status(500).send('Internal Server Error');
+      });
+  })
+  .catch(error => {
+    console.error('Error during login:', error);
+    res.status(500).send('Internal Server Error');
+  });
 });
 
 // Get untuk halaman home
@@ -14,19 +54,7 @@ router.get('/home', (req, res) => {
   }
   
   // Render halaman home jika user sudah login
-  res.render('/users/home', { user: req.session.user });
-});
-
-// Post untuk halaman home
-router.post('/home', (req, res) => {
-  // Proses yang ingin dilakukan setelah login
-  // Misalnya, simpan data atau tampilkan pesan sukses
-  res.redirect('/users/home'); // Redirect ke halaman home
-});
-
-// Arahkan root ke halaman login
-router.get('/', (req, res) => {
-  res.redirect('/users/login'); // Arahkan root ke halaman login
+  res.render('home', { user: req.session.user });
 });
 
 // Halaman pencarian
@@ -34,10 +62,9 @@ router.get('/pencarian', function(req, res, next) {
   res.render('pencarian');
 });
 
-
-// post setelah register
+// Post untuk register
 router.post('/register', (req, res) => {
-  const { username, password } = req.body;
+  const { fullname, username, phone, password, status, alamat, email } = req.body;
 
   // Cek apakah username sudah ada di database
   prisma.user.findUnique({
@@ -55,12 +82,12 @@ router.post('/register', (req, res) => {
         // Menyimpan pengguna baru di database
         prisma.user.create({
           data: {
-            username: username,
-            password: hashedPassword,  // Simpan password yang sudah terenkripsi
             fullname: fullname,
+            username: username,
             phone: phone,
+            password: hashedPassword,  // Simpan password yang sudah terenkripsi
             status: status,
-            address: address,
+            alamat: alamat,
             email: email,
           },
         })
@@ -86,9 +113,14 @@ router.post('/register', (req, res) => {
   });
 });
 
-// rute untuk halaman register
+// Rute untuk halaman register
 router.get('/register', (req, res) => {
-  res.render('register'); // Menampilkan halaman registrasi
+  res.render('register', { error: null }); // Menampilkan halaman registrasi
+});
+
+// Arahkan root ke halaman login
+router.get('/', (req, res) => {
+  res.redirect('/users/login'); // Arahkan root ke halaman login
 });
 
 module.exports = router;
