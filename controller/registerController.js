@@ -36,7 +36,6 @@ const registerUser = async (req, res) => {
     });
 
     // Redirect ke halaman login setelah registrasi berhasil
-    
     res.redirect('/users/login');
   } catch (error) {
     console.error(error);

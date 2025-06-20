@@ -44,8 +44,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
   secret: 'ihsan',  // Ganti dengan kunci yang lebih aman
   resave: false,
-  saveUninitialized: true
-}));
+  saveUninitialized: true,
+  }));
 
 
 // Routing untuk halaman utama dan login
@@ -74,7 +74,7 @@ app.post('/login', async (req, res) => {
     }
 
     // Mengatur session setelah login berhasil
-    req.session.userId = user.id;
+    req.session.user = user; // Menyimpan user ke session
 
     // Redirect ke halaman home setelah login berhasil
     res.redirect('/home');

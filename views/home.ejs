@@ -4,47 +4,40 @@
   <meta charset="UTF-8" />
   <title>Home - SIRASO BC</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  
+  <style>
+    /* Flexbox untuk memastikan footer selalu di bawah */
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh; /* Membuat body setinggi 100vh */
+    }
+
+    main {
+      flex: 1; /* Mengambil sisa ruang setelah header */
+    }
+  </style>
 </head>
 <body class="bg-white font-sans text-gray-900">
 
   <main>
-    <!-- Navbar -->
-    <div class="bg-green-600 p-4 flex justify-between items-center text-white">
-      <div class="text-xl font-bold">Pemesanan Makanan di Bussiness Center UNAND</div>
-      <div class="flex items-center space-x-4">
-        <a href="#" class="hover:text-gray-200">Home</a>
-        <a href="#" class="hover:text-gray-200">About</a>
-        <a href="#" class="hover:text-gray-200">Pesanan saya</a>
-        <div class="text-2xl">&#128100;</div>
-      </div>
-    </div>
+    <!-- Header -->
+    <%- include('partials/header') %> <!-- Menggunakan partial header.ejs -->
 
     <!-- Advertisement -->
-    <div class="flex justify-between items-center bg-gray-200 p-4 mt-4">
-      <div class="cursor-pointer text-xl">&#x2190;</div>
-      <div class="flex-1 text-center font-semibold">Advertisement</div>
-      <div class="cursor-pointer text-xl">&#x2192;</div>
+    <div class="flex justify-between items-center ">
+      <div class="flex-1 text-center">
+        <img src="/images/bc.jpg" alt="Advertisement" class="w-full h-40 object-cover">
+      </div>
     </div>
 
     <!-- Main Section -->
     <div class="flex mt-8">
       <!-- Sidebar -->
-      <div class="w-1/4 p-4 bg-gray-100 shadow-lg">
-        <h3 class="font-semibold text-xl mb-4">Nama warung</h3>
-        <ul class="space-y-2">
-          <li>Warung 1</li>
-          <li>Warung 2</li>
-          <li>Warung 3</li>
-          <li>Warung 4</li>
-          <li>Warung 5</li>
-          <li>Warung 6</li>
-        </ul>
-      </div>
+      <%- include('partials/sidebar') %> <!-- Menggunakan partial sidebar.ejs -->
 
       <!-- Menu Section -->
       <div class="w-3/4 p-4">
-        <h3 class="text-2xl font-semibold mb-6">Menu Favorit</h3>
+        <h3 class="text-2xl font-semibold mb-6 text-green-700">Menu Favorit</h3>
         <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
           <!-- Menu Item -->
           <div class="bg-white rounded-lg shadow-md overflow-hidden">
@@ -104,9 +97,7 @@
   </main>
 
   <!-- Footer -->
-  <footer class="bg-green-600 text-white p-4 mt-8 text-center">
-    <p>© 2025 SIRASO BC</p>
-  </footer>
+  <%- include('partials/footer') %> <!-- Menggunakan partial footer.ejs -->
 
 </body>
 </html>

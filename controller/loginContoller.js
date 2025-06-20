@@ -1,4 +1,4 @@
-const prisma = require('@prisma/client');
+const { PrismaClient } = require('@prisma/client');
 const bcrypt = require('bcrypt');
 const { validationResult } = require('express-validator');
 const prisma = new PrismaClient();
@@ -17,8 +17,7 @@ const loginUser = async (req, res) => {
     // Mencari user berdasarkan username
     const user = await prisma.user.findUnique({
       where: {
-        username: username,
-        password: password, // Pastikan ini sesuai dengan struktur database Anda
+        username: username
       },
     });
 
@@ -45,5 +44,4 @@ const loginUser = async (req, res) => {
     res.status(500).send('Terjadi kesalahan pada server.');
   }
 };
-
 module.exports = { loginUser };
