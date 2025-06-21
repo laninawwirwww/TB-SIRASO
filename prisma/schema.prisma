@@ -101,3 +101,10 @@ model Discounts {
   min_pembelian     Float
   is_active         Boolean  @default(true)
 }
+
+model Toko {
+  toko_id       Int      @id @default(autoincrement())
+  nama_toko     String   @unique
+  alamat        String
+  menu          Menu[]   // Relasi satu ke banyak dengan Menu
+}
