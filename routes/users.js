@@ -15,11 +15,11 @@ router.get('/login', (req, res) => {
 
 // Rute POST untuk login
 router.post('/login', (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
-  // Mencari user berdasarkan username
+  // Mencari user berdasarkan email
   prisma.user.findUnique({
-    where: { username: username }
+    where: { email: email }
   })
   .then(user => {
     if (!user) {
@@ -74,6 +74,17 @@ router.post('/home', (req, res) => {
   // Proses yang ingin dilakukan setelah login
   // Misalnya, simpan data atau tampilkan pesan sukses
   res.redirect('/users/home'); // Redirect ke halaman home
+});
+
+
+router.get('/pesanan', (req, res) => {
+  // Cek apakah user sudah login
+  if (!req.session.user) {
+    return res.redirect('/users/login'); // Jika belum login, redirect ke halaman login
+  }
+
+  // Render halaman pesanan jika user sudah login
+  res.render('pesanan', { user: req.session.user });
 });
 
 module.exports = router;
