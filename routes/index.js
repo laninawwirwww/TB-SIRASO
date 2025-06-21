@@ -123,4 +123,14 @@ router.get('/', (req, res) => {
   res.redirect('/users/login'); // Arahkan root ke halaman login
 });
 
+// Rute untuk halaman pesanan
+router.get('/pesanan', async (req, res) => {
+  // Misalkan data keranjang ada di session
+  const foods = req.session.cart || []; // Ambil data keranjang dari session
+  const total = foods.reduce((acc, food) => acc + food.subtotal, 0); // Hitung total harga
+  
+  res.render('pesanan', { foods: foods, total: total }); // Kirim data ke halaman pesanan
+});
+
+
 module.exports = router;
