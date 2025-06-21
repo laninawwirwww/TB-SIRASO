@@ -124,11 +124,7 @@ router.get('/', (req, res) => {
 });
 
 // Rute untuk halaman pesanan
-router.get('/pesanan', async (req, res) => {
-  // Misalkan data keranjang ada di session
-  const foods = req.session.cart || []; // Ambil data keranjang dari session
-  const total = foods.reduce((acc, food) => acc + food.subtotal, 0); // Hitung total harga
-  
+router.get('/pesanan', async (req, res) => {  
   res.render('pesanan', { foods: foods, total: total }); // Kirim data ke halaman pesanan
 });
 
