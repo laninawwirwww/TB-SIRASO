@@ -99,4 +99,4 @@ model Discounts {
   min_pembelian     Float
   is_active         Boolean  @default(true)
 }
->>>>>>> 0d5790b4731693ef57093d5914010f59bf13e275
+
