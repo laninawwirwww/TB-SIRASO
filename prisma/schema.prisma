@@ -33,7 +33,9 @@ model Menu {
   rating         Float
   available      String
   bahan          String
-  reviews        Review[]
+  toko           Toko      @relation(fields: [toko_id], references: [toko_id]) // Menambahkan relasi dengan Toko
+  toko_id        Int       // Menyimpan ID toko (cafe)
+  reviews        Review[]  
   keranjang      Keranjang[]
 }
 
@@ -99,4 +101,3 @@ model Discounts {
   min_pembelian     Float
   is_active         Boolean  @default(true)
 }
-
