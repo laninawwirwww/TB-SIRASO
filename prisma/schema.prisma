@@ -25,3 +25,4 @@ model menu {
   harga        String
   kategori     String
 }
+
